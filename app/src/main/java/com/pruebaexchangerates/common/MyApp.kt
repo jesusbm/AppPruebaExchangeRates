@@ -8,6 +8,7 @@ import com.pruebaexchangerates.data.provider.RetrofitInstance
 import com.pruebaexchangerates.data.repository.HistoricalRateRepository
 import com.pruebaexchangerates.domain.UseCaseLoadDataForMonth
 import com.pruebaexchangerates.ui.InitialScreenViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -18,13 +19,16 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val moduleList = listOf<Module>(getDataModule())
+        val moduleList = listOf<Module>(getModules())
 
-        startKoin { modules(moduleList) }
+        startKoin {
+            androidContext(this@MyApp)
+            modules(moduleList)
+        }
     }
 
 
-    private fun getDataModule(): Module {
+    private fun getModules(): Module {
 
         return module {
 
@@ -37,10 +41,7 @@ class MyApp : Application() {
                 ).build()
             }
 
-            //retrofit
-            single {
-                RetrofitInstance().buildInstance()
-            }
+            single { RetrofitInstance().buildInstance() }
 
             single { get<HistoricalRateExchangeRoomDatabase>().contratoRoomDao() }
 

@@ -9,14 +9,14 @@ import com.pruebaexchangerates.ui.common.SingleLiveEvent
 
 class InitialScreenViewModel : ViewModel() {
 
-    private var useCase: UseCaseLoadDataForMonth = get()
+    val useCase: UseCaseLoadDataForMonth? = null
 
     private val _monthSelected = MutableLiveData<Int>()
     private val _yearSelected = MutableLiveData<Int>()
 
     private val _eventLoadDataForMonth = SingleLiveEvent<Boolean>().apply {
         observeForever {
-            useCase.loadData()
+            useCase?.loadData()
         }
     }
 

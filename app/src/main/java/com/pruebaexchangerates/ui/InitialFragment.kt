@@ -8,13 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.pruebaexchangerates.R
 import com.pruebaexchangerates.databinding.FragmentMainBinding
+import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private val sTAG = InitialFragment::class.java.simpleName
 
     private lateinit var mBinding: FragmentMainBinding
-    private lateinit var mViewModel: InitialScreenViewModel
+    private val mViewModel: InitialScreenViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +24,6 @@ class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentMainBinding.inflate(inflater, container, false)
-        mViewModel = ViewModelProviders.of(this).get(InitialScreenViewModel::class.java)
         return mBinding.root
     }
 

@@ -1,6 +1,8 @@
 package com.pruebaexchangerates.domain
 
-class UseCaseLoadDataForMonth {
+import com.pruebaexchangerates.data.repository.HistoricalRateRepository
+
+class UseCaseLoadDataForMonth() {
 
     fun loadData() {
 
