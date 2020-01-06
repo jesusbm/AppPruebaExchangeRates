@@ -13,22 +13,28 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.pruebaexchangerates"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "API_ENDPOINT", ApiEndpointDebug
+            buildConfigField "String", "API_KEY", ApiKeyDebug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-    implementation project(':domain')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -61,6 +67,15 @@ dependencies {
 
     //Jetpack
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
+    implementation "androidx.room:room-runtime:2.2.3"
+    implementation "androidx.room:room-ktx:2.2.3"
+    implementation "androidx.room:room-rxjava2:2.2.3"
+    annotationProcessor 'androidx.room:room-compiler:2.2.3'
+
+    //Koin
+    //implementation "org.koin:koin-core:2.0.1"
+    implementation "org.koin:koin-android:2.0.1"
+    implementation "org.koin:koin-android-viewmodel:2.0.1"
 
 
     //Test

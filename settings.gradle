@@ -1,2 +1,2 @@
-include ':app', ':data', ':domain'
-rootProject.name='AppPruebaExchangeRates'
+include ':app'
+rootProject.name = 'AppPruebaExchangeRates'

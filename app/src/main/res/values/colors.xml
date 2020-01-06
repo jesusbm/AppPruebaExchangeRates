@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="color_textcolor_discreto">#BBBBBB</color>
+    <color name="color_background_fragment">#FFFFFF</color>
+    <color name="color_textcolor_normal">#0000FF</color>
+    <color name="azul_translucido">#660000FF</color>
+
 </resources>

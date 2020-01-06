@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_year">
+
+    <item
+        android:id="@+id/year1999"
+        android:title="1999" />
+
+    <item
+        android:id="@+id/year2000"
+        android:title="2000" />
+    <item
+        android:id="@+id/year2001"
+        android:title="2001" />
+    <item
+        android:id="@+id/year2002"
+        android:title="2002" />
+    <item
+        android:id="@+id/year2003"
+        android:title="2003" />
+    <item
+        android:id="@+id/year2004"
+        android:title="2004" />
+    <item
+        android:id="@+id/year2005"
+        android:title="2005" />
+    <item
+        android:id="@+id/year2006"
+        android:title="2006" />
+    <item
+        android:id="@+id/year2007"
+        android:title="2007" />
+    <item
+        android:id="@+id/year2008"
+        android:title="2008" />
+    <item
+        android:id="@+id/year2009"
+        android:title="2009" />
+
+    <item
+        android:id="@+id/year2010"
+        android:title="2010" />
+    <item
+        android:id="@+id/year2011"
+        android:title="2011" />
+    <item
+        android:id="@+id/year2012"
+        android:title="2012" />
+    <item
+        android:id="@+id/year2013"
+        android:title="2013" />
+    <item
+        android:id="@+id/year2014"
+        android:title="2014" />
+    <item
+        android:id="@+id/year2015"
+        android:title="2015" />
+    <item
+        android:id="@+id/year2016"
+        android:title="2016" />
+    <item
+        android:id="@+id/year2017"
+        android:title="2017" />
+    <item
+        android:id="@+id/year2018"
+        android:title="2018" />
+    <item
+        android:id="@+id/year2019"
+        android:title="2019" />
+
+    <item
+        android:id="@+id/year2020"
+        android:title="2020" />
+
+</menu>

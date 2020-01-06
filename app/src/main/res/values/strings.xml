@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">AppPruebaExchangeRates</string>
+    <string name="app_name">Euro Exchange Rates</string>
+    <string name="choose_month">Seleccionar\nmes</string>
+    <string name="choose_year">Seleccionar\naño</string>
+    <string name="reload">Recargar</string>
+
+    <string-array name="month_names">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </string-array>
+
 </resources>
