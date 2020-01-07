@@ -10,7 +10,7 @@ class HistoricalRateDataMapper {
 
         fun responseToModels(response: HistoricalRateQueryResponse): List<HistoricalRate> {
             return with(response) {
-                rates.entries.map { rate ->
+                rates?.entries?.map { rate ->
                     HistoricalRate(
                         baseCurrency = base,
                         otherCurrency = rate.key,
@@ -20,7 +20,7 @@ class HistoricalRateDataMapper {
                         queryTimestamp = queryTimestamp
                     )
                 }
-            }
+            } ?: listOf()
         }
 
         fun entityToModel(entity: HistoricalRateEntity): HistoricalRate {

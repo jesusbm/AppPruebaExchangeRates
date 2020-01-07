@@ -12,7 +12,7 @@ data class HistoricalRateQueryResponse(
 
     val base: String,
 
-    val rates: Map<String, Double>,
+    val rates: Map<String, Double>?,
 
     val error: ApiQueryError? = null,
 

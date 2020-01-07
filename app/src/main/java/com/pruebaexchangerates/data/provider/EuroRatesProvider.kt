@@ -42,6 +42,9 @@ class EuroRatesProvider(retrofitInstance: Retrofit) {
                 addQueryTimestamp(it)
                 HistoricalRateDataMapper.responseToModels(it)
             }
+            .onErrorReturn {
+                listOf()
+            }
     }
 
     private fun addQueryTimestamp(data: HistoricalRateQueryResponse): HistoricalRateQueryResponse {
