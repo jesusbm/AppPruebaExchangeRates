@@ -2,7 +2,9 @@
     <string name="app_name">Euro Exchange Rates</string>
     <string name="choose_month">Seleccionar\nmes</string>
     <string name="choose_year">Seleccionar\naño</string>
-    <string name="reload">Recargar</string>
+    <string name="query">Consultar</string>
+    <string name="message_download">Consultado información, espere un momento</string>
+    <string name="message_completed">Descarga finalizada</string>
 
     <string-array name="month_names">
         <item>Enero</item>

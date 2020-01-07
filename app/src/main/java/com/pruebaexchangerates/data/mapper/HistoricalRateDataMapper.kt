@@ -1,5 +1,6 @@
 package com.pruebaexchangerates.data.mapper
 
+import com.pruebaexchangerates.data.entity.HistoricalRateEntity
 import com.pruebaexchangerates.data.model.HistoricalRate
 import com.pruebaexchangerates.data.model.HistoricalRateQueryResponse
 
@@ -19,6 +20,19 @@ class HistoricalRateDataMapper {
                         queryTimestamp = queryTimestamp
                     )
                 }
+            }
+        }
+
+        fun entityToModel(entity: HistoricalRateEntity): HistoricalRate {
+            return with(entity) {
+                HistoricalRate(
+                    baseCurrency = baseCurrency,
+                    otherCurrency = otherCurrency,
+                    rate = rate,
+                    date = date,
+                    timestamp = timestamp,
+                    queryTimestamp = queryTimestamp
+                )
             }
         }
     }

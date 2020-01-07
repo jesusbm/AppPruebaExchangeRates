@@ -1,14 +1,15 @@
 package com.pruebaexchangerates.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import com.pruebaexchangerates.R
 import com.pruebaexchangerates.databinding.FragmentMainBinding
-import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
@@ -16,7 +17,7 @@ class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private val sTAG = InitialFragment::class.java.simpleName
 
     private lateinit var mBinding: FragmentMainBinding
-    private val mViewModel: InitialScreenViewModel by viewModel()
+    private val mViewModel: InitialScreenViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,42 +40,30 @@ class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.year1999 -> setYear(1999)
-            R.id.year2000 -> setYear(2000)
-            R.id.year2001 -> setYear(2001)
-            R.id.year2002 -> setYear(2002)
-            R.id.year2003 -> setYear(2003)
-            R.id.year2004 -> setYear(2004)
-            R.id.year2005 -> setYear(2005)
-            R.id.year2006 -> setYear(2006)
-            R.id.year2007 -> setYear(2007)
-            R.id.year2008 -> setYear(2008)
-            R.id.year2009 -> setYear(2009)
-            R.id.year2010 -> setYear(2010)
-            R.id.year2011 -> setYear(2011)
-            R.id.year2012 -> setYear(2012)
-            R.id.year2013 -> setYear(2013)
-            R.id.year2014 -> setYear(2014)
-            R.id.year2015 -> setYear(2015)
-            R.id.year2016 -> setYear(2016)
-            R.id.year2017 -> setYear(2017)
-            R.id.year2018 -> setYear(2018)
-            R.id.year2019 -> setYear(2019)
-            R.id.year2020 -> setYear(2020)
-            R.id.month00 -> setMonth(0)
-            R.id.month01 -> setMonth(1)
-            R.id.month02 -> setMonth(2)
-            R.id.month03 -> setMonth(3)
-            R.id.month04 -> setMonth(4)
-            R.id.month05 -> setMonth(5)
-            R.id.month06 -> setMonth(6)
-            R.id.month07 -> setMonth(7)
-            R.id.month08 -> setMonth(8)
-            R.id.month09 -> setMonth(9)
-            R.id.month10 -> setMonth(10)
-            R.id.month11 -> setMonth(11)
+        return when (item.groupId) {
+            R.id.menugroup_month -> monthSelectedFromMenu(item)
+            R.id.menugroup_year -> yearSelectedFromMenu(item)
             else -> false
+        }
+    }
+
+    private fun monthSelectedFromMenu(item: MenuItem): Boolean {
+        val monthValue = getMonthValueFromItemId(item.itemId)
+        return if (monthValue in (0..11)) {
+            setMonth(monthValue)
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun yearSelectedFromMenu(item: MenuItem): Boolean {
+        val yearValue = item.title.toString().toIntOrNull()
+        return if (null != yearValue) {
+            setYear(yearValue)
+            true
+        } else {
+            false
         }
     }
 
@@ -85,18 +74,35 @@ class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         mBinding.btnMes.setOnClickListener {
             showPopupMonth(it)
         }
-        mBinding.btnRecargar.setOnClickListener {
-            mViewModel.loadInfoForSelectedMonth()
-            /*val datosX = (1..31).toList()
-            val datosY = datosX.map { Math.random() * 5 + it }
-            mBinding.ratesPlot.setData(datosX, datosY)
-            animatePlot()*/
+        mBinding.btnConsultar.setOnClickListener {
+            updateData()
         }
     }
 
     private fun configurateViewModel() {
         mBinding.lifecycleOwner = this
         mBinding.viewModel = mViewModel
+        mViewModel.dataXY.observe(viewLifecycleOwner, Observer {
+            mBinding.ratesPlot.setData(it.first.toList(), it.second.toList(), it.second.toList())
+            animatePlot()
+        })
+        mViewModel.eventStartQuery.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.message_download),
+                Toast.LENGTH_SHORT
+            ).show()
+        })
+        mViewModel.eventCompletedQuery.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.message_completed),
+                Toast.LENGTH_SHORT
+            ).show()
+        })
+        mViewModel.eventErrorQuery.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun animatePlot() {
@@ -139,5 +145,27 @@ class InitialFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private fun setYear(year: Int): Boolean {
         mViewModel.setYearSelected(year)
         return true
+    }
+
+    private fun updateData() {
+        mViewModel.loadInfoForSelectedMonth()
+    }
+
+    private fun getMonthValueFromItemId(@IdRes itemId: Int): Int {
+        return when (itemId) {
+            R.id.month00 -> 0
+            R.id.month01 -> 1
+            R.id.month02 -> 2
+            R.id.month03 -> 3
+            R.id.month04 -> 4
+            R.id.month05 -> 5
+            R.id.month06 -> 6
+            R.id.month07 -> 7
+            R.id.month08 -> 8
+            R.id.month09 -> 9
+            R.id.month10 -> 10
+            R.id.month11 -> 11
+            else -> -1
+        }
     }
 }

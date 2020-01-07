@@ -14,7 +14,7 @@ interface HistoricalRateDao {
     @Query("SELECT * FROM historicalRate WHERE baseCurrency = :baseCurrency ORDER BY timestamp ASC")
     fun getAllRatesForBaseCurrency(baseCurrency: String): Single<List<HistoricalRateEntity>>
 
-    @Query("SELECT * FROM historicalRate WHERE timestamp >= :startTimestamp AND timestamp <= :endTimestamp ORDER BY timestamp ASC")
+    @Query("SELECT * FROM historicalRate WHERE baseCurrency = :baseCurrency AND otherCurrency = :otherCurrency AND timestamp >= :startTimestamp AND timestamp <= :endTimestamp ORDER BY timestamp ASC")
     fun getRatesInTimespanForCurrencies(
         baseCurrency: String,
         otherCurrency: String,

@@ -37,15 +37,20 @@ class GraficaMesView(context: Context, attrs: AttributeSet?) : View(context, att
         set
         get
 
-    fun setData(dataX: List<Int>, dataY: List<Double>) {
+    fun setData(dataX: List<Int>, dataY: List<Double>, dataLabel: List<Double>) {
         if (dataX.isNotEmpty() && dataX.size == dataY.size) {
+            val maximum = dataY.max()!!
+            val minimum = dataY.min()!!
             this.datosX = dataX
-            this.datosY = dataY
+            this.datosY = dataY.map { it - minimum }.map { 10 + it * 80 / (maximum - minimum) }
+            //this.datosY = dataY.map { it * (100 - 10) / (maximum - minimum) + 10 }
+            this.datosLabel = dataLabel
         }
     }
 
     private var datosX = (1..30).toList()
-    private var datosY = datosX.map { (Math.random() * 100) }
+    private var datosY = datosX.map { 0 * 100.0 }
+    private var datosLabel = datosX.map { 0 * 100.0 }
     val datosInfo =
         datosY.mapIndexed { index, value -> "$value visita${if (index > 1) "s" else ""} en el dia $index" }
 
@@ -58,7 +63,7 @@ class GraficaMesView(context: Context, attrs: AttributeSet?) : View(context, att
     private var textLabelHeight = 30f
     private val textLabelBoundsRect = Rect()
 
-    private val reducingFactor = 0.65f
+    private var reducingFactor = 0.65f
     private val indicatorRadius: Float = 20f
     private var isPressedView: Boolean = false
     private var motionEventView: MotionEvent? = null
@@ -142,8 +147,9 @@ class GraficaMesView(context: Context, attrs: AttributeSet?) : View(context, att
                             val textTopPosition = 10f
 
                             //dibujamos la info de la barra seleccionada
-                            val text =
-                                "Tasa de cambio: ${(datosY[contenedor] * 1000000).toInt() / 1000000.0}"
+                            val valorAuxX = datosX[contenedor]
+                            val valorAuxY = (datosLabel[contenedor] * 1000000).toInt() / 1000000.0
+                            val text = "Dia $valorAuxX : 1 EUR = $valorAuxY USD"
                             val textStartPositionX = calculateTextStartPosition(
                                 text,
                                 Xover,

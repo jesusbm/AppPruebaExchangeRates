@@ -5,6 +5,9 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.logging.HttpLoggingInterceptor
 
 class RetrofitInstance {
 
@@ -15,13 +18,16 @@ class RetrofitInstance {
     val instance: Retrofit
         get() = _mInstance
 
-    fun buildInstance(): Retrofit {
+    private fun buildInstance(): Retrofit {
         val okHttpClient = OkHttpClient.Builder().run {
             addInterceptor(buildAddAccessKeyInterceptor())
+            addInterceptor(buildLoggingInterceptor())
             build()
         }
         return Retrofit.Builder().run {
             baseUrl(BuildConfig.API_ENDPOINT)
+            addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            addConverterFactory(GsonConverterFactory.create())
             client(okHttpClient)
             build()
         }
@@ -43,6 +49,12 @@ class RetrofitInstance {
                 }
                 return chain.proceed(modifiedRequest)
             }
+        }
+    }
+
+    private fun buildLoggingInterceptor(): Interceptor {
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
         }
     }
 }
