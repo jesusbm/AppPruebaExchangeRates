@@ -88,7 +88,7 @@ class HistoricalRateRepository(provider: EuroRatesProvider, dao: HistoricalRateD
             time = date
         }
         val firstDay = calendar.getActualMinimum(Calendar.DAY_OF_MONTH)
-        val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH) / 2
+        val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val dates = IntRange(firstDay, lastDay).map { it ->
             calendar.set(Calendar.DAY_OF_MONTH, it)
             calendar.time

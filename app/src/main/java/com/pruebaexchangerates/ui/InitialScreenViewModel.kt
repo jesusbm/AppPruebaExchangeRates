@@ -61,12 +61,10 @@ class InitialScreenViewModel(
 
     fun setMonthSelected(month: Int) {
         this._monthSelected.value = month
-        _eventLoadDataForMonth.value = true
     }
 
     fun setYearSelected(year: Int) {
         this._yearSelected.value = year
-        _eventLoadDataForMonth.value = true
     }
 
     fun loadInfoForSelectedMonth() {
